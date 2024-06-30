@@ -5,7 +5,7 @@ const Partnerships = ({ partnerships }) => {
   return (
     <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-8 mx-10'>
       {partnerships.map((partnership, index) => ( 
-        <div className='flex flex-col justify-center items-center'>
+        <div className='flex flex-col justify-center items-center' key={index}>
         <a 
           key={index} 
           href={partnership.link} 

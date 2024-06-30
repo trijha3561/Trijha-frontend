@@ -1,7 +1,25 @@
+/* globals.css */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* Import the custom font-face declaration */
+@font-face {
+  font-family: 'TT Firs Text Trial';
+  font-style: normal;
+  font-weight: normal;
+  src: url('/fonts/TTFirsTextTrial-Regular.woff') format('woff'),
+       url('/fonts/TTFirsTextTrial-Bold.woff') format('woff');
+  /* Add more formats if necessary */
+}
+
+/* Optionally, you can define a fallback font */
+body {
+  font-family: 'TT Firs Text Trial', sans-serif;
+}
+
+/* Your existing custom CSS variables and styles */
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
@@ -27,6 +45,7 @@ body {
 }
 
 @layer utilities {
+  /* Your existing utility classes */
   .text-balance {
     text-wrap: balance;
   }

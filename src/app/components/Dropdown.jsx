@@ -30,7 +30,7 @@ const Dropdown = (props) => {
       {isOpen && (
         <ul className="dropdown-menu absolute top-full left-0 mt-1 bg-white border border-gray-300 rounded shadow-lg">
           {props.arr.map((ele, index) => (
-            <li key={index} className="dropdown-item py-2 px-4 cursor-pointer bg-orange-20  text-md hover:bg-gray-100 ">
+            <li key={ele} className="dropdown-item py-2 px-4 cursor-pointer bg-orange-20  text-md hover:bg-gray-100 ">
               {ele}
             </li>
           ))}

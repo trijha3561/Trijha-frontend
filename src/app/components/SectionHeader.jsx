@@ -1,10 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-const SectionHeader = ({ name, bgColor = 'bg-orange-100 ', textAlign = 'text-center', fontFamily = 'font-firs-text-trial-bold', color = 'text-slate-900' }) => {
+const SectionHeader = ({ name, bgColor = 'bg-orange-100', textAlign = 'text-center', fontFamily = 'font-firs-text-trial-bold', color = 'text-slate-900' }) => {
   return (
     <motion.div 
-      className={`py-8 ${bgColor}`} // Increased padding to increase height
+      className={`py-8 ${bgColor}`} // Corrected template literal syntax
       initial={{ opacity: 0, y: -50 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}

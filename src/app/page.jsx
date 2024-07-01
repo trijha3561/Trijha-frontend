@@ -14,6 +14,7 @@ import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { HiChevronLeft, HiChevronRight, HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'; // Importing bigger V-shaped icons 
 import {useState} from 'react';
 import {motion} from 'framer-motion';
+import Head from 'next/head';
 
 
 const partnerships = [
@@ -86,14 +87,14 @@ const bestSellingProducts = [{
   title: 'Product 1',
   description: 'This is the description for product 1.',
   price: '29.99',
-  imageUrl: 'https://placehold.co/600x400',
+  imageUrl: 'best_seller_img/Gardening_Kit.png',
 },
 {
   id: 2,
   title: 'Product 2',
   description: 'This is the description for product 2.',
   price: '39.99',
-  imageUrl: 'https://placehold.co/600x400',
+  imageUrl: 'best_seller_img/Vermicompost.png',
 },
  
 // Add more products as needed
@@ -186,7 +187,11 @@ const Page = () => {
   return ( 
     
     <div className="relative max-w-full bg-gradient-to-b from-slate-50 via-orange-50 to-pink-50">
-      <title><img src='frontend/public/trijha final logo.png'/><p>Trijha</p></title>
+      {/* Title of the tab */}
+      <Head>
+         
+        <title><img src='frontend/public/trijha final logo.png'/><p>Trijha</p></title>
+      </Head>
       <div class="absolute top-0 -z-10 h-full w-full bg-white"><div class="absolute bottom-auto left-auto right-0 top-0 h-[500px] w-[500px] -translate-x-[30%] translate-y-[20%] rounded-full bg-[rgba(173,109,244,0.5)] opacity-50 blur-[80px]"></div></div>
       <Navbar />  
       {/*<img src='Slider1.png' />*/}

@@ -84,15 +84,15 @@ const hoverCardData = [
 //defining the image array 
 const bestSellingProducts = [{
   id: 1,
-  title: 'Product 1',
-  description: 'This is the description for product 1.',
+  title: 'Gardening Kit',
+  description: 'The gardening kit provides you with all the neccessary tools to make your home green.',
   price: '29.99',
   imageUrl: 'best_seller_img/Gardening_Kit.png',
 },
 {
   id: 2,
-  title: 'Product 2',
-  description: 'This is the description for product 2.',
+  title: 'Vermicompost',
+  description: 'Rich manure right from the home of Farmers, to enrich your soil!',
   price: '39.99',
   imageUrl: 'best_seller_img/Vermicompost.png',
 },

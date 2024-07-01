@@ -17,22 +17,22 @@ import {motion} from 'framer-motion';
 
 
 const partnerships = [
-  {
+  { id: 1,
     name: 'Boston Consulting Group',
     imageUrl: 'BCG.png',
     link: 'https://www.bcg.com/',
   },
-  {
+  { id: 2,
     name: 'Evention',
     imageUrl: 'Eventions.png',
     link: 'https://www.companyB.com',
   },
-  {
+  { id: 3,
     name: 'Bank of Baroda',
     imageUrl: 'BOB.png',
     link: 'https://www.companyA.com',
   },
-  {
+  { id: 4,
     name: 'Arth',
     imageUrl: 'arth.png',
     link: 'https://arthcart.com/',
@@ -99,12 +99,12 @@ const bestSellingProducts = [{
 // Add more products as needed
 ]
 const images = [
-  {
+  { id: 1,
     url: '/Users/harshitverma/Desktop/Trijha_Website/frontend/public/Slider1.png',
     title: 'Welcome to Trijha!',
     caption: 'Explore our services.',
   },
-  {
+  { id: 2,
     url: '/Users/harshitverma/Desktop/Trijha_Website/frontend/public/Slider2.png',
     title: 'Discover our products.',
     caption: 'Visit our store now.',

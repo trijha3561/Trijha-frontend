@@ -40,9 +40,9 @@ const ImageSlider = () => {
             
             <div className="absolute inset-0 flex items-center justify-between z-30 px-4">
             <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 z-30 flex space-x-2">
-              {images.map((_, index) => (
+              {images.map((image, index) => (
                 <button
-                  key={index}
+                  key={image.id}
                   onClick={() => goToSlide(index)}
                   className={`w-7 h-7 rounded-full border border-gray-500 ${index === imageIndex ? 'bg-slate-100 bg-opacity-75' : 'bg-slate-400 bg-opacity-50'}`}
                 >

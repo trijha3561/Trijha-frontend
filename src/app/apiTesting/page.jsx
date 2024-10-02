@@ -40,7 +40,7 @@ const Page = () => {
   
   // Fetch message and people list from backend when component mounts
   useEffect(() => {
-    fetch("http://localhost:3001/")
+    fetch("https://trijha-backend.vercel.app/")
       .then((response) => response.json())
       .then((data) => {
         setMessage(data.message);
@@ -58,7 +58,7 @@ const Page = () => {
         return result.user.getIdToken(); // Get ID token from user credential
       })
       .then((idToken) => {
-        return fetch("http://localhost:3001/google-signup", {
+        return fetch("https://trijha-backend.vercel.app/google-signup", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

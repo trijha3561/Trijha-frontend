@@ -20,7 +20,7 @@ const SignInModal = ({ isOpen, onClose }) => {
         Cookies.set('profilePic', user.photoURL, { expires: 7 });
         Cookies.set('displayName', user.displayName, { expires: 7 });
 
-        const response = await fetch("http://localhost:3001/google-signup", {
+        const response = await fetch('https://trijha-backend.vercel.app/google-signup', {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

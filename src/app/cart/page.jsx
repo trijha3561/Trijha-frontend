@@ -21,7 +21,7 @@ const CartPage = () => {
       }
 
       try {
-        const response = await fetch(`http://localhost:3001/cart?idToken=${token}`, {
+        const response = await fetch(`https://trijha-backend.vercel.app/cart?idToken=${token}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -70,7 +70,7 @@ const CartPage = () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3001/cart/update`, {
+      const response = await fetch(`https://trijha-backend.vercel.app/cart/update`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

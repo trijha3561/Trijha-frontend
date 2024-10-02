@@ -1,0 +1,59 @@
+[
+    {
+      "id": 1,
+      "name": "Shivam Praja-Pati",
+      "stars": 1,
+      "review": "Useless product..Rajasthan me fassal hi nahu ugati bencho",
+      "avatar": "testimonials/shivam.png"
+    },
+    {
+      "id": 2,
+      "name": "Vinay",
+      "stars": 5,
+      "review": "Awesome Product!..well done freshers!!",
+      "avatar": "testimonials/vinay.png"
+    },
+    {
+      "id": 3,
+      "name": "Prem Kumar",
+      "stars": 4,
+      "review": "Gao ke khaad se to better hai..Gamle bahut sundar the",
+      "avatar": "testimonials/prem.png"
+    },
+    {
+      "id": 4,
+      "name": "Uditi Sachdev",
+      "stars": 5,
+      "review": "Product was outstanding...AINA mai baatungi",
+      "avatar": "testimonials/uditi.png"
+    },
+    {
+      "id": 5,
+      "name": "Abhigya Gupta",
+      "stars": 1,
+      "review": "Ordered it from Amazon...",
+      "avatar": "testimonials/abhigya.png"
+    },
+    {
+      "id": 6,
+      "name": "Awani",
+      "stars": 5,
+      "review": "Really liked the product..going to help deliver this to BCG",
+      "avatar": "https://via.placeholder.com/150"
+    },
+    {
+      "id": 7,
+      "name": "Aditya",
+      "stars": 5,
+      "review": "Achha hai",
+      "avatar": "testimonials/aditya.png"
+    },
+    {
+      "id": 8,
+      "name": "Aditya",
+      "stars": 4,
+      "review": "Jabardast",
+      "avatar": "testimonials/aditya_raj.png"
+    }
+  ]
+  

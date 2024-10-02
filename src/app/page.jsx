@@ -12,93 +12,23 @@ import Footer  from './components/Footer';
 
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa';
 import { HiChevronLeft, HiChevronRight, HiOutlineChevronLeft, HiOutlineChevronRight } from 'react-icons/hi'; // Importing bigger V-shaped icons 
-import {useState} from 'react';
+import {useState} from 'react'; 
+import { useRouter } from 'next/navigation';
 import {motion} from 'framer-motion';
-import Head from 'next/head';
+import Head from 'next/head'; 
+
+//Importing the data 
+import bestSellingProducts from './data/bestSellingProducts'
+import partnerships from './data/partnerships';
+import hoverCardData from './data/hoverCardData.json'
+import testimonials from './data/testimonials'
 
 
-const partnerships = [
-  { id: 1,
-    name: 'Boston Consulting Group',
-    imageUrl: 'BCG.png',
-    link: 'https://www.bcg.com/',
-  },
-  { id: 2,
-    name: 'Evention',
-    imageUrl: 'Eventions.png',
-    link: 'https://www.companyB.com',
-  },
-  { id: 3,
-    name: 'Bank of Baroda',
-    imageUrl: 'BOB.png',
-    link: 'https://www.companyA.com',
-  },
-  { id: 4,
-    name: 'Arth',
-    imageUrl: 'arth.png',
-    link: 'https://arthcart.com/',
-  },
-  // Add more partnerships here
-];
+
 
  
-const hoverCardData = [
-  {
-    id: 1,
-    title: '63% more yield!',
-    description: 'Product yield is 63% more than what regular compost yields as tested by the labs at IIT-Delhi',
-    imageUrl: 'WhyTrijha_img/compost.png',
-  },
-  {
-    id: 2,
-    title: 'CRDT verified!',
-    description: 'Our product has been tested and validated by the Centre for Rural Development and Technology (CRDT) ',
-    imageUrl: 'WhyTrijha_img/CRDT.png',
-  },
-  {
-    id: 3,
-    title: 'Product 3',
-    description: 'This is the description for product 3.',
-    imageUrl: 'WhyTrijha_img/compost.png',
-  },
-  {
-    id: 4,
-    title: 'Product 4',
-    description: 'This is the description for product 4.',
-    imageUrl: 'WhyTrijha_img/CRDT.png',
-  },
-  {
-    id: 5,
-    title: 'Product 5',
-    description: 'This is the description for product 5.',
-    imageUrl: 'WhyTrijha_img/compost.png',
-  },
-  {
-    id: 6,
-    title: 'Product 6',
-    description: 'This is the description for product 4.',
-    imageUrl: 'WhyTrijha_img/CRDT.png',
-  },
-  // Add more cards as needed
-];
-//defining the image array 
-const bestSellingProducts = [{
-  id: 1,
-  title: 'Gardening Kit',
-  description: 'The gardening kit provides you with all the neccessary tools to make your home green.',
-  price: '29.99',
-  imageUrl: 'best_seller_img/Gardening_Kit.png',
-},
-{
-  id: 2,
-  title: 'Vermicompost',
-  description: 'Rich manure right from the home of Farmers, to enrich your soil!',
-  price: '39.99',
-  imageUrl: 'best_seller_img/Vermicompost.png',
-},
- 
-// Add more products as needed
-]
+
+
 const images = [
   { id: 1,
     url: '/Users/harshitverma/Desktop/Trijha_Website/frontend/public/Slider1.png',
@@ -110,68 +40,27 @@ const images = [
     title: 'Discover our products.',
     caption: 'Visit our store now.',
   },];
-    const testimonials = [
-      {
-        id: 1,
-        name: 'Shivam Praja-Pati',
-        stars: 1,
-        review: 'Useless product..Rajasthan me fassal hi nahu ugati bencho',
-        avatar: 'testimonials/shivam.png',
-      },
-      {
-        id: 2,
-        name: 'Vinay',
-        stars: 5,
-        review: 'Awesome Product!..well done freshers!!',
-        avatar: 'testimonials/vinay.png',
-      },
-      {
-        id: 3,
-        name: 'Prem Kumar',
-        stars: 4,
-        review: 'Gao ke khaad se to better hai..Gamle bahut sundar the',
-        avatar: 'testimonials/prem.png',
-      },
-      {
-        id: 4,
-        name: 'Uditi Sachdev',
-        stars: 5,
-        review: 'Product was outstanding...AINA mai baatungi',
-        avatar: 'testimonials/uditi.png',
-      },
-      {
-        id: 5,
-        name: 'Abhigya Gupta',
-        stars: 1,
-        review: 'Ordered it from Amazon...',
-        avatar: 'testimonials/abhigya.png',
-      },{
-        id: 6,
-        name: 'Awani',
-        stars: 5,
-        review: 'Really liked the product..going to help deliver this to BCG',
-        avatar: 'https://via.placeholder.com/150',
-      },{
-        id: 7,
-        name: 'Aditya',
-        stars: 5,
-        review: 'Achha hai',
-        avatar: 'testimonials/aditya.png',
-      },{
-        id: 8,
-        name: 'Aditya',
-        stars: 4,
-        review: 'Jabardast',
-        avatar: 'testimonials/aditya_raj.png',
-      },
-    // Add more testimonials as needed 
-  ] 
+    
 const testimonial = testimonials[0]
 const Page = () => {  
-  const   n = testimonials.length
+  const n = testimonials.length
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(0);
+  /*cart Section */
+  const [cart, setCart] = useState([]);
+  const router = useRouter();
 
+  const addToCart = (product) => {
+    setCart([...cart, product]);
+  };
+
+  const goToCart = () => {
+    router.push({
+      pathname: '/checkout/cart',
+      query: { cart: JSON.stringify(cart) }
+    });
+  };
+  /* */
   const handlePrevClick = () => {
     setDirection(-1);
     setCurrentIndex((prevIndex) => ((prevIndex -1 + n)%n));
@@ -281,4 +170,20 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Page; 
+// 'use client';
+// import React from 'react'
+// import {signOut, useSession} from 'next-auth/react';
+
+// const page = () => { 
+//   const session = useSession();
+//   return (
+//     <div>
+//       <div>{session?.data?.user?.name}</div>
+//       <button onClick={()=> signOut()}>Logout</button>
+//       <h1>Setting up</h1>
+//     </div>
+//   )
+// }
+
+// export default page

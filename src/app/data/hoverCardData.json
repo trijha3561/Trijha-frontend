@@ -1,0 +1,39 @@
+[
+    {
+      "id": 1,
+      "title": "63% more yield!",
+      "description": "Product yield is 63% more than what regular compost yields as tested by the labs at IIT-Delhi",
+      "imageUrl": "WhyTrijha_img/compost.png"
+    },
+    {
+      "id": 2,
+      "title": "CRDT verified!",
+      "description": "Our product has been tested and validated by the Centre for Rural Development and Technology (CRDT)",
+      "imageUrl": "WhyTrijha_img/CRDT.png"
+    },
+    {
+      "id": 3,
+      "title": "Product 3",
+      "description": "This is the description for product 3.",
+      "imageUrl": "WhyTrijha_img/compost.png"
+    },
+    {
+      "id": 4,
+      "title": "Product 4",
+      "description": "This is the description for product 4.",
+      "imageUrl": "WhyTrijha_img/CRDT.png"
+    },
+    {
+      "id": 5,
+      "title": "Product 5",
+      "description": "This is the description for product 5.",
+      "imageUrl": "WhyTrijha_img/compost.png"
+    },
+    {
+      "id": 6,
+      "title": "Product 6",
+      "description": "This is the description for product 4.",
+      "imageUrl": "WhyTrijha_img/CRDT.png"
+    }
+  ]
+  

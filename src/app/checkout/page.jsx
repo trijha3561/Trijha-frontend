@@ -38,11 +38,11 @@ const CheckoutPage = () => {
   
       try {
         const [cartResponse, detailsResponse] = await Promise.all([
-          fetch(`https://trijha-backend.vercel.app/cart?idToken=${token}`, {
+          fetch(`https://trijha-backend-production.up.railway.app/cart?idToken=${token}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
           }),
-          fetch(`https://trijha-backend.vercel.app/get-details?idToken=${token}`, {
+          fetch(`https://trijha-backend-production.up.railway.app/get-details?idToken=${token}`, {
             method: 'GET',
             headers: { 'Content-Type': 'application/json' }
           })
@@ -81,7 +81,7 @@ const CheckoutPage = () => {
       }
 
       try {
-        const response = await fetch(`https://trijha-backend.vercel.app/cart?idToken=${token}`, {
+        const response = await fetch(`https://trijha-backend-production.up.railway.app/cart?idToken=${token}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -123,7 +123,7 @@ const CheckoutPage = () => {
     }
   
     try {
-      const response = await fetch('https://trijha-backend.vercel.app/save-details', {
+      const response = await fetch('https://trijha-backend-production.up.railway.app/save-details', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

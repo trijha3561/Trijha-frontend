@@ -15,7 +15,7 @@ const LoginPage = () => {
       const result = await signInWithPopup(auth, provider);
       const idToken = await result.user.getIdToken();
 
-      const response = await fetch("https://trijha-backend.vercel.app/google-signup", {
+      const response = await fetch("https://trijha-backend-production.up.railway.app/google-signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

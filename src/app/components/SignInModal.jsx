@@ -1,4 +1,5 @@
 // components/SignInModal.js
+'use client';
 import { useState } from 'react';
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../config/firebase-config";

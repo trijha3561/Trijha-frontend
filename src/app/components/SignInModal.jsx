@@ -1,6 +1,6 @@
 // components/SignInModal.js
-import { useEffect, useState } from 'react';
-import { signInWithRedirect, GoogleAuthProvider, getRedirectResult } from "firebase/auth";
+import { useState } from 'react';
+import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { auth } from "../config/firebase-config";
 import { FaGoogle } from 'react-icons/fa';
 import Cookies from 'js-cookie';
@@ -8,60 +8,48 @@ import { toast } from 'react-toastify'; // Import toast
 
 const SignInModal = ({ isOpen, onClose }) => {
   
-  // Handle Google Sign-In with Redirect
-  const handleGoogleSignIn = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithRedirect(auth, provider); // No need to await since this redirects immediately
-  };
+  // Handle Google Sign-In with Popup
+  const handleGoogleSignIn = async () => {
+    try {
+      const provider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, provider); // Use Popup instead of Redirect
+      const user = result.user;
 
-  // Use `getRedirectResult` to fetch the result after redirect
-  useEffect(() => {
-    const handleRedirectResult = async () => {
-      try {
-        const result = await getRedirectResult(auth);
-        if (result) {
-          const user = result.user;
+      if (user) {
+        const idToken = await user.getIdToken();
 
-          if (user) {
-            const idToken = await user.getIdToken();
+        // Store data in cookies
+        Cookies.set('token', user.accessToken, { expires: 7 });
+        Cookies.set('profilePic', user.photoURL, { expires: 7 });
+        Cookies.set('displayName', user.displayName, { expires: 7 });
 
-            // Store data in cookies
-            Cookies.set('token', user.accessToken, { expires: 7 });
-            Cookies.set('profilePic', user.photoURL, { expires: 7 });
-            Cookies.set('displayName', user.displayName, { expires: 7 });
+        // Send the token to your backend
+        const response = await fetch('https://trijha-backend-production-dd37.up.railway.app/google-signup', {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${idToken}`
+          },
+          body: JSON.stringify({ idToken }),
+        });
 
-            // Send the token to your backend
-            const response = await fetch('https://trijha-backend-production-dd37.up.railway.app/google-signup', {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Bearer ${idToken}`
-              },
-              body: JSON.stringify({ idToken }),
-            });
-
-            if (response.ok) {
-              const data = await response.json();
-              toast.success(data.message); // Show success message
-              onClose(); // Close modal on successful sign-in
-              window.location.reload(); // Optionally reload the page
-            } else {
-              toast.error("Error during sign-in."); // Show error message
-              console.error("Error during sign-in:", response.statusText);
-            }
-          }
-        }
-      } catch (error) {
-        if (error.code !== 'auth/popup-closed-by-user') {
+        if (response.ok) {
+          const data = await response.json();
+          toast.success(data.message); // Show success message
+          onClose(); // Close modal on successful sign-in
+          window.location.reload(); // Optionally reload the page
+        } else {
           toast.error("Error during sign-in."); // Show error message
-          console.error("Error during sign-in:", error);
+          console.error("Error during sign-in:", response.statusText);
         }
       }
-    };
-
-    // Call the function when the component mounts
-    handleRedirectResult();
-  }, [onClose]); // Empty dependency array to run only once
+    } catch (error) {
+      if (error.code !== 'auth/popup-closed-by-user') {
+        toast.error("Error during sign-in."); // Show error message
+        console.error("Error during sign-in:", error);
+      }
+    }
+  };
 
   if (!isOpen) return null;
 

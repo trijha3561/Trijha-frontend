@@ -17,7 +17,8 @@ const SignInModal = ({ isOpen, onClose }) => {
       const user = result.user;
 
       if (user) {
-        const idToken = await user.getIdToken();
+        const idToken = await user.getIdToken(); 
+        console.log(idToken)
 
         // Store data in cookies
         Cookies.set('token', user.accessToken, { expires: 7 });

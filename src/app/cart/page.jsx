@@ -21,7 +21,7 @@ const CartPage = () => {
       }
 
       try {
-        const response = await fetch(`https://trijha-backend.vercel.app/cart?idToken=${token}`, {
+        const response = await fetch(`https://trijha-backend-production.up.railway.app/cart?idToken=${token}`, {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -51,10 +51,11 @@ const ProductPage = ({ params }) => {
     try {
       // Make a POST request to the backend to add the product to the cart
       const response = await axios.post(
-        'https://trijha-backend.vercel.app/cart/update',
+        'https://trijha-backend-production.up.railway.app/cart/update ',
         {
           cartItems: [
             {
+              
               productId: product.id,
               title: product.title,
               price: product.price,

@@ -5,23 +5,19 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'; // Import Toastify CSS
 import bestSellingProducts from '../../data/bestSellingProducts.json'; // Import product data
 import Navbar from '../../components/Navbar'; // Import Navbar
-import Cookies from 'js-cookie'; // Import js-cookie for checking user session
-import { db } from '../../config/firebase-config'; // Import Firebase config
-import { collection, addDoc, doc, getDoc, updateDoc } from 'firebase/firestore'; // Firestore functions
-import { getAuth } from 'firebase/auth';  
+import Cookies from 'js-cookie'; // Import js-cookie for handling token
+import axios from 'axios'; // Use axios for API requests
 
 const ProductPage = ({ params }) => {
-  console.log(params)
   const { productId } = params; // Use productId from URL params
-  console.log("This messaged is logged!")
-  // console.log(productId)
-  // Find the product based on the productId parameter from the URL
-  const product = bestSellingProducts.find((p) => p.id === productId);// Change to find by ID
+  const product = bestSellingProducts.find((p) => p.id === productId); // Find the product by ID
+  const images = [product?.imageUrl, product?.imageUrl1, product?.imageUrl2]; // Product images
 
-  const images = [product?.imageUrl, product?.imageUrl1, product?.imageUrl2]; // Images array
   const [imageIndex, setImageIndex] = useState(0);
-  const [quantity, setQuantity] = useState(1); // State to track the quantity
+  const [quantity, setQuantity] = useState(1); // Track quantity of product
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
+  // Function to navigate through images
   const goPrev = () => setImageIndex(imageIndex === 0 ? images.length - 1 : imageIndex - 1);
   const goNext = () => setImageIndex(imageIndex === images.length - 1 ? 0 : imageIndex + 1);
 
@@ -30,65 +26,57 @@ const ProductPage = ({ params }) => {
     return () => clearInterval(interval);
   }, [imageIndex]);
 
-  // Function to handle adding product to cart
+  // Check if the user is authenticated (using token stored in cookies)
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token) {
+      setIsAuthenticated(true);
+    }
+  }, []);
+
+  // Function to add product to cart using backend API
   const handleAddToCart = async () => {
-    const token = Cookies.get('token'); // Retrieve the token from cookies
+    const token = Cookies.get('token'); // Retrieve token from cookies
 
     if (!token) {
-        toast.error('Please sign in to add items to your cart'); // Show error if not signed in
-        return;
+      toast.error('Please sign in to add items to your cart');
+      return;
     }
 
     if (quantity < 1) {
-        toast.error('Quantity must be at least 1'); // Validate quantity
-        return;
+      toast.error('Quantity must be at least 1');
+      return;
     }
 
     try {
-        const auth = getAuth(); // Get the auth instance
-        const user = auth.currentUser; // Get the currently signed-in user
-        console.log(user)
-
-        if (!user) {
-            toast.error('User not found'); // Show error if user is not authenticated
-            return;
+      // Make a POST request to the backend to add the product to the cart
+      const response = await axios.post(
+        'https://trijha-backend.vercel.app/cart/update',
+        {
+          cartItems: [
+            {
+              productId: product.id,
+              title: product.title,
+              price: product.price,
+              quantity: quantity, // Selected quantity
+              imageUrl: product.imageUrl,
+              addedAt: new Date(),
+            },
+          ],
+          idToken: token, // Pass the token for authentication
         }
+      );
 
-        const uid = user.uid; // Get the uid from the user object
-
-        // Fetch user document from the 'users' collection
-        const userRef = doc(db, 'users', uid); // Use uid to get user document
-        const userDoc = await getDoc(userRef);
-
-        if (!userDoc.exists()) {
-            toast.error('User not found'); // Show error if user document doesn't exist
-            return;
-        }
-
-        // Get the current cart from the user document
-        const currentCart = userDoc.data().cart || []; // Initialize cart if it doesn't exist
-
-        // Create a new product object
-        const newProduct = {
-            productId: product.id,
-            title: product.title,
-            price: product.price,
-            quantity, // Store the selected quantity
-            imageUrl: product.imageUrl, // Store the image URL
-            addedAt: new Date(),
-        };
-
-        // Add the new product to the cart
-        await updateDoc(userRef, {
-            cart: [...currentCart, newProduct] // Update the cart array
-        });
-
-        toast.success('Product added to cart!'); // Show success message
+      if (response.data.message) {
+        toast.success('Product added to cart!');
+      } else {
+        toast.error('Failed to add product to cart');
+      }
     } catch (error) {
-        console.error('Error adding to cart:', error);
-        toast.error('Failed to add the product to the cart');
+      console.error('Error adding product to cart:', error);
+      toast.error('Failed to add product to cart');
     }
-};
+  };
 
   if (!product) {
     return (
@@ -96,9 +84,7 @@ const ProductPage = ({ params }) => {
         <Navbar />
         <div className="container mx-auto my-10 p-5">
           <h1 className="text-2xl font-semibold text-red-600">Product Not Found</h1>
-          <p className="text-lg text-gray-700 mt-4">
-            We couldn't find the product you are looking for.
-          </p>
+          <p className="text-lg text-gray-700 mt-4">We couldn't find the product you are looking for.</p>
         </div>
       </div>
     );
@@ -107,7 +93,7 @@ const ProductPage = ({ params }) => {
   return (
     <div className="product-detail-page bg-white">
       <Navbar />
-      <ToastContainer /> {/* Toast container for showing alerts */}
+      <ToastContainer /> {/* Toast container for notifications */}
       <div className="container mx-auto my-10 p-5">
         <div className="product-detail-card bg-orange-50 p-10 rounded-lg shadow-lg grid grid-cols-1 lg:grid-cols-2 gap-8">
           <div className="relative flex justify-center items-center">
@@ -129,7 +115,7 @@ const ProductPage = ({ params }) => {
             <p className="text-lg text-theme-description mb-6">{product.description}</p>
             <p className="text-2xl font-bold text-theme-price mb-6">₹{product.price}</p>
 
-            {/* Quantity input field */}
+            {/* Quantity input */}
             <div className="mb-6">
               <label htmlFor="quantity" className="block text-lg font-medium text-theme-description">
                 Quantity:
@@ -139,14 +125,14 @@ const ProductPage = ({ params }) => {
                 id="quantity"
                 name="quantity"
                 value={quantity}
-                onChange={(e) => setQuantity(Number(e.target.value))} // Update quantity state
+                onChange={(e) => setQuantity(Number(e.target.value))} // Update quantity
                 className="w-20 px-3 py-2 border border-gray-300 rounded"
                 min="1"
               />
             </div>
 
             <button
-              onClick={handleAddToCart} // Attach add to cart handler
+              onClick={handleAddToCart}
               className="bg-orange-400 text-white py-2 px-6 rounded hover:bg-orange-500"
             >
               Add to Cart
